@@ -1,0 +1,15 @@
+.idea
+/node_modules
+/dist
+/public/dist/*
+!.gitkeep
+/coverage
+/credential/*
+!/credential/*.example
+
+
+# Elastic Beanstalk Files
+/*.log
+bundle.zip
+tmp/
+newrelic_agent.log

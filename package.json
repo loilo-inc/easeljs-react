@@ -1,0 +1,40 @@
+{
+  "name": "easeljs-react-fiber",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "start": "npm run build && npm run serve",
+    "check": "npm run build && npm run test",
+    "build": "npm run build-ts && npm run browserify",
+    "lint": "tslint src/**/*.ts -p ./tslint.json",
+    "build-ts": "tsc",
+    "watch-ts": "tsc -w",
+    "browserify": "browserify ./dist/example/index.js -t [browserify-shim] --debug -o ./public/dist/index.js",
+    "watchify": "watchify ./dist/example/index.js --verbose --debug -t [browserify-shim] -o ./public/dist/index.js",
+    "test": "jest --forceExit",
+    "watch": "parallelshell 'chokidar \"src/**.{ts,js,jsx}\"' 'npm run watch-ts' 'npm run watchify'",
+    "clean": "rm -rf dist/*"
+  },
+  "dependencies": {
+    "@types/easeljs": "^1.0.0",
+    "@types/node": "^9.4.7",
+    "@types/react": "^16.0.40",
+    "easeljs": "^1.0.2",
+    "fbjs": "^0.8.16",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
+    "react-reconciler": "^0.7.0"
+  },
+  "devDependencies": {
+    "typescript": "^2.7.2",
+    "browserify": "^16.1.1",
+    "browserify-shim": "^3.8.14",
+    "chokidar-cli": "^1.2.0",
+    "parallelshell": "^3.0.2",
+    "watchify": "^3.11.0"
+  },
+  "browserify-shim": {
+    "easeljs": "global:createjs"
+  }
+}
