@@ -4,7 +4,7 @@ import {StageComponent} from "../src";
 import {setInterval} from "timers";
 import Shape = createjs.Shape;
 import Stage = createjs.Stage;
-import {BitmapComponent, ShapeComponent} from "../src/types";
+import {BitmapComponent, ContainerComponent, ShapeComponent, TextComponent} from "../src/types";
 
 class IndexComponent extends React.Component {
     image;
@@ -23,10 +23,12 @@ class IndexComponent extends React.Component {
             this.stage.update();
         }
     }
+
     update() {
         this.onTick();
         this.stage.update();
     }
+
     onTick() {
         this.shape.graphics
             .clear()
@@ -35,6 +37,21 @@ class IndexComponent extends React.Component {
             .endStroke();
     }
 
+    _render() {
+        // obsolete way.
+        const stage = new createjs.Stage("canvas");
+        const bitmap = new createjs.Bitmap(this.image);
+        const shape = new createjs.Shape();
+        const container = new createjs.Container();
+        const text = new createjs.Text();
+        text.font = "20pt Arial";
+        text.color = "white";
+        text.text = "hello world!";
+        container.addChild(text);
+        container.x = 100;
+        container.y = 200;
+        stage.addChild(bitmap, shape, container);
+    }
     render() {
         return (
             <StageComponent
@@ -43,7 +60,13 @@ class IndexComponent extends React.Component {
                 width={1024} height={768}
             >
                 <BitmapComponent image={this.image}/>
-                <ShapeComponent ref={n => this.shape = n.getPublicInstance()} />
+                <ShapeComponent ref={n => this.shape = n.getPublicInstance()}/>
+                <ContainerComponent x={100} y={200}>
+                    <TextComponent
+                        font={"20pt Arial"}
+                        color={"white"}
+                        text={"hello world!"}/>
+                </ContainerComponent>
             </StageComponent>
         )
     }

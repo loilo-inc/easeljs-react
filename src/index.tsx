@@ -11,69 +11,6 @@ import Rectangle = createjs.Rectangle;
 import * as React from "react";
 import * as emptyObject from "fbjs/lib/emptyobject"
 
-export type StageProps = {
-    autoClear?: boolean;
-    canvas?: HTMLCanvasElement | Object;
-    drawRect?: Rectangle;
-    handleEvent?: Function;
-    mouseInBounds?: boolean;
-    mouseMoveOutside?: boolean;
-    mouseX?: number;
-    mouseY?: number;
-    nextStage?: Stage;
-    onStageMouseDown?: (ev: createjs.MouseEvent) => void
-    onStageMouseMove?: (ev: createjs.MouseEvent) => void
-    onStageMouseUp?: (ev: createjs.MouseEvent) => void
-    onMouseEnter?: (ev: createjs.MouseEvent) => void
-    onMouseLeave?: (ev: createjs.MouseEvent) => void
-    onTickStart?: (ev: createjs.MouseEvent) => void
-    onTickEnd?: (ev: createjs.MouseEvent) => void
-    onDrawStart?: (ev: createjs.MouseEvent) => void
-    onDrawEnd?: (ev: createjs.MouseEvent) => void
-}
-export type DisplayObjectProps = {
-    // properties
-    alpha?: number;
-    bitmapCache?: BitmapCache;
-    cacheCanvas?: HTMLCanvasElement | Object;
-    cacheID?: number;
-    compositeOperation?: string;
-    cursor?: string;
-    filters?: Filter[];
-    hitArea?: DisplayObject;
-    id?: number;
-    mask?: Shape;
-    mouseEnabled?: boolean;
-    name?: string;
-    //parent: Container;
-    regX?: number;
-    regY?: number;
-    rotation?: number;
-    scaleX?: number;
-    scaleY?: number;
-    shadow?: Shadow;
-    skewX?: number;
-    skewY?: number;
-    snapToPixel?: boolean;
-    stage?: Stage;
-    tickEnabled?: boolean;
-    transformMatrix?: Matrix2D;
-    visible?: boolean;
-    x?: number;
-    y?: number;
-    onAdded?: (ev: createjs.MouseEvent) => void
-    onClick?: (ev: createjs.MouseEvent) => void
-    onDblClick?: (ev: createjs.MouseEvent) => void
-    onMouseDown?: (ev: createjs.MouseEvent) => void
-    onMouseOut?: (ev: createjs.MouseEvent) => void
-    onMouseOver?: (ev: createjs.MouseEvent) => void
-    onPressMove?: (ev: createjs.MouseEvent) => void
-    onPressUp?: (ev: createjs.MouseEvent) => void
-    onRemoved?: () => void
-    onRollOut?: (ev: createjs.MouseEvent) => void
-    onRollOver?: (ev: createjs.MouseEvent) => void
-    onTick?: () => void
-}
 
 import * as ReactFiberReconciler from 'react-reconciler';
 import {rIC, now} from './scheduling';
@@ -313,6 +250,27 @@ const foundDevTools = Renderer.injectIntoDevTools({
         console.log(args);
     }
 });
+
+export type StageProps = {
+    autoClear?: boolean;
+    canvas?: HTMLCanvasElement | Object;
+    drawRect?: Rectangle;
+    handleEvent?: Function;
+    mouseInBounds?: boolean;
+    mouseMoveOutside?: boolean;
+    mouseX?: number;
+    mouseY?: number;
+    nextStage?: Stage;
+    onStageMouseDown?: (ev: createjs.MouseEvent) => void
+    onStageMouseMove?: (ev: createjs.MouseEvent) => void
+    onStageMouseUp?: (ev: createjs.MouseEvent) => void
+    onMouseEnter?: (ev: createjs.MouseEvent) => void
+    onMouseLeave?: (ev: createjs.MouseEvent) => void
+    onTickStart?: (ev: createjs.MouseEvent) => void
+    onTickEnd?: (ev: createjs.MouseEvent) => void
+    onDrawStart?: (ev: createjs.MouseEvent) => void
+    onDrawEnd?: (ev: createjs.MouseEvent) => void
+}
 
 export class StageComponent extends React.Component<StageProps & {
     width: number, height: number
