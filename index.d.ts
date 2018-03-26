@@ -54,7 +54,7 @@ export type DisplayObjectProps = {
     onTick?: () => void
 }
 
-export interface DisplayObjectComponent<N extends DisplayObject, P = {}> extends React.Component<P & DisplayObjectProps> {
+export class DisplayObjectComponent<N extends DisplayObject, P = {}> extends React.Component<P & DisplayObjectProps> {
     getPublicInstance(): N
 }
 
@@ -79,19 +79,19 @@ export type StageProps = {
     onDrawEnd?: (ev: createjs.MouseEvent) => void
 }
 
-export interface StageComponent extends React.Component<StageProps & {
+export class StageComponent extends React.Component<StageProps & {
     width: number, height: number
 }> {
     readonly stage: Stage;
 }
 
-export interface ContainerComponent extends DisplayObjectComponent<Container> {
+export class ContainerComponent extends DisplayObjectComponent<Container> {
 }
 
-export interface ShapeComponent extends DisplayObjectComponent<Shape> {
+export class ShapeComponent extends DisplayObjectComponent<Shape> {
 }
 
-export interface BitmapComponent extends DisplayObjectComponent<Bitmap, {
+export class BitmapComponent extends DisplayObjectComponent<Bitmap, {
     image: HTMLImageElement | HTMLCanvasElement | HTMLVideoElement;
     sourceRect?: Rectangle;
 }> {
@@ -109,5 +109,5 @@ export type TextProps = {
     textBaseline?: string;
 } & DisplayObjectProps;
 
-export interface TextComponent extends DisplayObjectComponent<createjs.Text, TextProps> {
+export class TextComponent extends DisplayObjectComponent<createjs.Text, TextProps> {
 }
