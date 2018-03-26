@@ -5,7 +5,6 @@
     "sourceMap": true,
     "outDir": "dist",
     "jsx": "react",
-    "allowJs": true,
     "baseUrl": "."
   },
   "exclude": [

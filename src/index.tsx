@@ -4,8 +4,6 @@ import Stage = createjs.Stage;
 import Rectangle = createjs.Rectangle;
 import * as React from "react";
 import * as emptyObject from "fbjs/lib/emptyobject"
-
-
 import * as ReactFiberReconciler from 'react-reconciler';
 import {now, rIC} from './scheduling';
 import * as invariant from "fbjs/lib/invariant";

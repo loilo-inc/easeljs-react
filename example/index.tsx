@@ -1,10 +1,9 @@
 import * as React from "react";
 import {render} from "react-dom";
 import {StageComponent} from "../src";
-import {setInterval} from "timers";
 import Shape = createjs.Shape;
-import Stage = createjs.Stage;
 import {BitmapComponent, ContainerComponent, ShapeComponent, TextComponent} from "../src/types";
+import Stage = createjs.Stage;
 
 class IndexComponent extends React.Component {
     image;

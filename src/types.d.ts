@@ -69,7 +69,8 @@ export class BitmapComponent extends DisplayObjectComponent<Bitmap, {
     sourceRect?: Rectangle;
 }> {
 }
-export type TextProps =  {
+
+export type TextProps = {
     color?: string;
     font?: string;
     lineHeight?: number;
