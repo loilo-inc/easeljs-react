@@ -9,6 +9,7 @@ import Stage = createjs.Stage;
 import Shadow = createjs.Shadow;
 import Filter = createjs.Filter;
 import BitmapCache = createjs.BitmapCache;
+import Graphics = createjs.Graphics;
 
 export type DisplayObjectProps = {
     // properties
@@ -89,6 +90,7 @@ export class ContainerComponent extends DisplayObjectComponent<Container> {
 }
 
 export class ShapeComponent extends DisplayObjectComponent<Shape> {
+    graphics: Graphics
 }
 
 export class BitmapComponent extends DisplayObjectComponent<Bitmap, {

@@ -8,6 +8,7 @@
     "start": "npm run build && npm run serve",
     "check": "npm run build && npm run test",
     "build": "npm run build-ts",
+    "build2": "npm run build && npm run browserify",
     "lint": "tslint src/**/*.ts -p ./tslint.json",
     "build-ts": "tsc",
     "watch-ts": "tsc -w",
@@ -38,6 +39,7 @@
     "watchify": "^3.11.0"
   },
   "browserify-shim": {
-    "easeljs": "global:createjs"
+    "easeljs": "global:createjs",
+    "react": "global:React"
   }
 }
