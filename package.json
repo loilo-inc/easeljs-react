@@ -7,7 +7,7 @@
   "scripts": {
     "start": "npm run build && npm run serve",
     "check": "npm run build && npm run test",
-    "build": "npm run build-ts && npm run browserify",
+    "build": "npm run build-ts",
     "lint": "tslint src/**/*.ts -p ./tslint.json",
     "build-ts": "tsc",
     "watch-ts": "tsc -w",
