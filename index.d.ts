@@ -54,17 +54,44 @@ export type DisplayObjectProps = {
     onTick?: () => void
 }
 
-export class DisplayObjectComponent<N extends DisplayObject, P = {}> extends React.Component<P & DisplayObjectProps> {
+export interface DisplayObjectComponent<N extends DisplayObject, P = {}> extends React.Component<P & DisplayObjectProps> {
     getPublicInstance(): N
 }
 
-export class ContainerComponent extends DisplayObjectComponent<Container> {
+export type StageProps = {
+    autoClear?: boolean;
+    canvas?: HTMLCanvasElement | Object;
+    drawRect?: Rectangle;
+    handleEvent?: Function;
+    mouseInBounds?: boolean;
+    mouseMoveOutside?: boolean;
+    mouseX?: number;
+    mouseY?: number;
+    nextStage?: Stage;
+    onStageMouseDown?: (ev: createjs.MouseEvent) => void
+    onStageMouseMove?: (ev: createjs.MouseEvent) => void
+    onStageMouseUp?: (ev: createjs.MouseEvent) => void
+    onMouseEnter?: (ev: createjs.MouseEvent) => void
+    onMouseLeave?: (ev: createjs.MouseEvent) => void
+    onTickStart?: (ev: createjs.MouseEvent) => void
+    onTickEnd?: (ev: createjs.MouseEvent) => void
+    onDrawStart?: (ev: createjs.MouseEvent) => void
+    onDrawEnd?: (ev: createjs.MouseEvent) => void
 }
 
-export class ShapeComponent extends DisplayObjectComponent<Shape> {
+export interface StageComponent extends React.Component<StageProps & {
+    width: number, height: number
+}> {
+    readonly stage: Stage;
 }
 
-export class BitmapComponent extends DisplayObjectComponent<Bitmap, {
+export interface ContainerComponent extends DisplayObjectComponent<Container> {
+}
+
+export interface ShapeComponent extends DisplayObjectComponent<Shape> {
+}
+
+export interface BitmapComponent extends DisplayObjectComponent<Bitmap, {
     image: HTMLImageElement | HTMLCanvasElement | HTMLVideoElement;
     sourceRect?: Rectangle;
 }> {
@@ -82,5 +109,5 @@ export type TextProps = {
     textBaseline?: string;
 } & DisplayObjectProps;
 
-export class TextComponent extends DisplayObjectComponent<createjs.Text, TextProps> {
+export interface TextComponent extends DisplayObjectComponent<createjs.Text, TextProps> {
 }

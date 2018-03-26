@@ -8,6 +8,7 @@ import * as ReactFiberReconciler from 'react-reconciler';
 import {now, rIC} from './scheduling';
 import * as invariant from "fbjs/lib/invariant";
 import {getClosestInstanceFromNode} from './dom-tree';
+import {StageComponent, StageProps} from "../index";
 
 const kPropsToSkip = {children: true, ref: true, key: true, style: true};
 
@@ -243,31 +244,14 @@ const foundDevTools = Renderer.injectIntoDevTools({
     }
 });
 
-export type StageProps = {
-    autoClear?: boolean;
-    canvas?: HTMLCanvasElement | Object;
-    drawRect?: Rectangle;
-    handleEvent?: Function;
-    mouseInBounds?: boolean;
-    mouseMoveOutside?: boolean;
-    mouseX?: number;
-    mouseY?: number;
-    nextStage?: Stage;
-    onStageMouseDown?: (ev: createjs.MouseEvent) => void
-    onStageMouseMove?: (ev: createjs.MouseEvent) => void
-    onStageMouseUp?: (ev: createjs.MouseEvent) => void
-    onMouseEnter?: (ev: createjs.MouseEvent) => void
-    onMouseLeave?: (ev: createjs.MouseEvent) => void
-    onTickStart?: (ev: createjs.MouseEvent) => void
-    onTickEnd?: (ev: createjs.MouseEvent) => void
-    onDrawStart?: (ev: createjs.MouseEvent) => void
-    onDrawEnd?: (ev: createjs.MouseEvent) => void
-}
-
-export class StageComponent extends React.Component<StageProps & {
+class StageComponentImpl extends React.Component<StageProps & {
     width: number, height: number
-}> {
+}> implements StageComponent {
     _stage: createjs.Stage;
+    get stage() {
+        return this._stage;
+    }
+
     _mountNode;
     _tagRef;
 
@@ -310,3 +294,5 @@ export class StageComponent extends React.Component<StageProps & {
     }
 }
 
+export { StageComponentImpl as StageComponent }
+export * from "./types";
