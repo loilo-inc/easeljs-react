@@ -5,16 +5,18 @@
     "sourceMap": true,
     "outDir": "dist",
     "jsx": "react",
-    "baseUrl": "."
+    "baseUrl": ".",
+    "allowJs": true
   },
   "exclude": [
     "node_modules"
   ],
   "include": [
     "src/**/*.js",
+    "src/**/*.jsx",
     "src/**/*.ts",
     "src/**/*.tsx",
     "example/**/*.ts",
-    "example/**/*.tsx"
+    "example/**/*.jsx"
   ]
 }

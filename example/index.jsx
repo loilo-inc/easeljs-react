@@ -1,14 +1,15 @@
 import * as React from "react";
 import {render} from "react-dom";
 import {StageComponent} from "../src";
-import Shape = createjs.Shape;
-import {BitmapComponent, ContainerComponent, ShapeComponent, TextComponent} from "../src/types";
-import Stage = createjs.Stage;
+
+const Shape = createjs.Shape;
+const Stage = createjs.Stage;
+import {BitmapComponent, ContainerComponent, ShapeComponent, TextComponent} from "../src";
 
 class IndexComponent extends React.Component {
     image;
-    stage: Stage;
-    shape: Shape;
+    stage;
+    shape;
 
     constructor(props) {
         super(props);
@@ -51,6 +52,7 @@ class IndexComponent extends React.Component {
         container.y = 200;
         stage.addChild(bitmap, shape, container);
     }
+
     render() {
         return (
             <StageComponent
