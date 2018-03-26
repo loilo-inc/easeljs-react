@@ -89,8 +89,9 @@ export class StageComponent extends React.Component<StageProps & {
 export class ContainerComponent extends DisplayObjectComponent<Container> {
 }
 
-export class ShapeComponent extends DisplayObjectComponent<Shape> {
+export class ShapeComponent extends DisplayObjectComponent<Shape, {
     graphics: Graphics
+}> {
 }
 
 export class BitmapComponent extends DisplayObjectComponent<Bitmap, {
