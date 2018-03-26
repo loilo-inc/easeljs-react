@@ -13,7 +13,9 @@ import {StageComponent, StageProps} from "../index";
 const kPropsToSkip = {children: true, ref: true, key: true, style: true};
 
 let warningShowed = false;
-
+function storedEventHandlerKey(ev) {
+ return  "__easeljs_react_wrapped_event_listener:"+ev;
+}
 function applyNodeProps(instance: DisplayObject, props, oldProps = {}) {
     if (!warningShowed && 'id' in props) {
         const message = `ReactKonva: You are using "id" attribute for a Konva node. In some very rare cases it may produce bugs. Currently we recommend not to use it and use "name" attribute instead.
@@ -34,7 +36,10 @@ For me info see: https://github.com/lavrton/react-konva/issues/119`;
         const propChanged = oldProps[key] !== props[key];
         if (isEvent && propChanged) {
             let eventName = key.substr(2).toLowerCase();
-            instance.off(eventName, oldProps[key]);
+            const func = instance[storedEventHandlerKey(key)];
+            if (func) {
+                instance.off(eventName, func);
+            }
         }
         const toRemove = !props.hasOwnProperty(key);
         if (toRemove) {
@@ -50,7 +55,8 @@ For me info see: https://github.com/lavrton/react-konva/issues/119`;
         if (isEvent && toAdd) {
             let eventName = key.substr(2).toLowerCase();
             if (props[key]) {
-                instance.on(eventName, props[key]);
+                const listener = instance.on(eventName, props[key]);
+                instance[storedEventHandlerKey(key)] = listener;
             }
         }
         if (
@@ -205,11 +211,13 @@ const Renderer = ReactFiberReconciler({
         },
 
         removeChild(parentInstance: Container, child: DisplayObject) {
+            child.removeAllEventListeners();
             parentInstance.removeChild(child);
             updatePicture(parentInstance);
         },
 
         removeChildFromContainer(parentInstance: Container, child: DisplayObject) {
+            child.removeAllEventListeners();
             parentInstance.removeChild(child);
             updatePicture(parentInstance);
         },
