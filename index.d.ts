@@ -90,7 +90,7 @@ export class ContainerComponent extends DisplayObjectComponent<Container> {
 }
 
 export class ShapeComponent extends DisplayObjectComponent<Shape, {
-    graphics: Graphics
+    graphics?: Graphics
 }> {
 }
 
