@@ -1,19 +1,13 @@
-import BitmapCache = createjs.BitmapCache;
-import Filter = createjs.Filter;
 import DisplayObject = createjs.DisplayObject;
-import Shape = createjs.Shape;
 import Container = createjs.Container;
-import Shadow = createjs.Shadow;
 import Stage = createjs.Stage;
-import Matrix2D = createjs.Matrix2D;
-import Bitmap = createjs.Bitmap;
 import Rectangle = createjs.Rectangle;
 import * as React from "react";
 import * as emptyObject from "fbjs/lib/emptyobject"
 
 
 import * as ReactFiberReconciler from 'react-reconciler';
-import {rIC, now} from './scheduling';
+import {now, rIC} from './scheduling';
 import * as invariant from "fbjs/lib/invariant";
 import {getClosestInstanceFromNode} from './dom-tree';
 
