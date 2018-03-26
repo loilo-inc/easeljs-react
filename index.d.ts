@@ -86,7 +86,12 @@ export class StageComponent extends React.Component<StageProps & {
     readonly stage: Stage;
 }
 
-export class ContainerComponent extends DisplayObjectComponent<Container> {
+export class ContainerComponent extends DisplayObjectComponent<Container, {
+    //children: DisplayObject[];
+    mouseChildren?: boolean;
+    //numChildren: number;
+    tickChildren?: boolean;
+}> {
 }
 
 export class ShapeComponent extends DisplayObjectComponent<Shape, {
