@@ -1,26 +1,26 @@
 import DisplayObject = createjs.DisplayObject;
 import Container = createjs.Container;
 import Stage = createjs.Stage;
-import Rectangle = createjs.Rectangle;
 import * as React from "react";
-import * as emptyObject from "fbjs/lib/emptyobject"
 import * as ReactFiberReconciler from 'react-reconciler';
-import {now, rIC} from './scheduling';
-import * as invariant from "fbjs/lib/invariant";
+import {requestIdleCallback} from './ric';
+import {now} from "./now";
 import {getClosestInstanceFromNode} from './dom-tree';
 import {StageComponent, StageProps} from "../index";
+import {CanvasHTMLAttributes} from "react";
 
 const kPropsToSkip = {children: true, ref: true, key: true, style: true};
 
 let warningShowed = false;
+
 function storedEventHandlerKey(ev) {
- return  "__easeljs_react_wrapped_event_listener:"+ev;
+    return `__easeljs_react_wrapped_event_listener:${ev}`;
 }
+
 function applyNodeProps(instance: DisplayObject, props, oldProps = {}) {
     if (!warningShowed && 'id' in props) {
-        const message = `ReactKonva: You are using "id" attribute for a Konva node. In some very rare cases it may produce bugs. Currently we recommend not to use it and use "name" attribute instead.
-You are using id = "${props.id}".
-For me info see: https://github.com/lavrton/react-konva/issues/119`;
+        const message = `easeljs-react: You are using "id" attribute for a easeljs node. In some very rare cases it may produce bugs. Currently we recommend not to use it and use "name" attribute instead.
+You are using id = "${props.id}"`;
         console.warn(message);
         warningShowed = true;
     }
@@ -82,17 +82,12 @@ function updatePicture(node: Stage | DisplayObject) {
 }
 
 const UPDATE_SIGNAL = {};
-
+const kEmptyObject = Object.freeze({});
 const Renderer = ReactFiberReconciler({
     appendInitialChild(parentInstance: Container, child: DisplayObject) {
         if (typeof child === 'string') {
             // Noop for string children of Text (eg <Text>{'foo'}{'bar'}</Text>)
-            invariant(
-                false,
-                'Don not use plain text as child of Konva.Node. You are using text: "%s"',
-                child
-            );
-            return;
+            throw new Error(`Don not use plain text as child of Konva.Node. You are using text: "${child}"`);
         }
         parentInstance.addChild(child);
 
@@ -102,8 +97,7 @@ const Renderer = ReactFiberReconciler({
     createInstance(type: string, props: { [key: string]: any }, internalInstanceHandle) {
         const NodeClass = createjs[type];
         if (!NodeClass) {
-            invariant(null, 'createjs does not support the type "%s"', type);
-            return;
+            throw new Error(`createjs does not support the type "${type}"`);
         }
 
         const instance = new NodeClass();
@@ -114,10 +108,7 @@ const Renderer = ReactFiberReconciler({
     },
 
     createTextInstance(text, rootContainerInstance, internalInstanceHandle) {
-        invariant(
-            false,
-            'Text components are not supported for now in createjs.'
-        );
+        throw new Error('Text components are not supported for now in easeljs-react. Use "TextComponent" instead.');
     },
 
     finalizeInitialChildren(domElement, type, props) {
@@ -153,14 +144,14 @@ const Renderer = ReactFiberReconciler({
     },
 
     getRootHostContext() {
-        return emptyObject;
+        return kEmptyObject;
     },
 
     getChildHostContext() {
-        return emptyObject;
+        return kEmptyObject;
     },
 
-    scheduleDeferredCallback: rIC,
+    scheduleDeferredCallback: requestIdleCallback,
 
     shouldSetTextContent(type, props) {
         return false;
@@ -191,20 +182,18 @@ const Renderer = ReactFiberReconciler({
         },
 
         insertBefore(parentInstance: Container, child: DisplayObject, beforeChild) {
-            invariant(
-                child !== beforeChild,
-                'createjs: Can not insert node before itself'
-            );
+            if (child !== beforeChild) {
+                throw new Error('easeljs-react: Can not insert node before itself');
+            }
             // remove and add back to reset zIndex
             parentInstance.setChildIndex(child, parentInstance.numChildren - 1);
             updatePicture(parentInstance);
         },
 
         insertInContainerBefore(parentInstance: Container, child: DisplayObject, beforeChild) {
-            invariant(
-                child !== beforeChild,
-                'createjs: Can not insert node before itself'
-            );
+            if (child !== beforeChild) {
+                throw new Error('createjs: Can not insert node before itself');
+            }
             // remove and add back to reset zIndex
             parentInstance.setChildIndex(child, parentInstance.numChildren - 1);
             updatePicture(parentInstance);
@@ -252,33 +241,26 @@ const foundDevTools = Renderer.injectIntoDevTools({
     }
 });
 
-class StageComponentImpl extends React.Component<StageProps & {
-    width: number, height: number
-}> implements StageComponent {
-    _stage: createjs.Stage;
+class StageComponentImpl
+    extends React.Component<StageProps & CanvasHTMLAttributes<HTMLCanvasElement>>
+    implements StageComponent {
+    private _stage: createjs.Stage;
     get stage() {
         return this._stage;
     }
 
-    _mountNode;
-    _tagRef;
+    private _mountNode;
+    private _tagRef;
 
     componentDidMount() {
-        const {height, width} = this.props;
-
         this._stage = new createjs.Stage(this._tagRef);
-
         applyNodeProps(this._stage, this.props);
-
         this._mountNode = Renderer.createContainer(this._stage);
         Renderer.updateContainer(this.props.children, this._mountNode, this);
     }
 
     componentDidUpdate(prevProps, prevState) {
-        const props = this.props;
-
         applyNodeProps(this._stage, this.props, prevProps);
-
         Renderer.updateContainer(this.props.children, this._mountNode, this);
     }
 
@@ -287,20 +269,18 @@ class StageComponentImpl extends React.Component<StageProps & {
         this._stage.clear();
     }
 
-    getStage() {
-        return this._stage;
-    }
-
     render() {
+        const {width, height} = this.props;
         return (
             <canvas
+                className={this.props.className}
                 ref={ref => (this._tagRef = ref)}
-                width={this.props.width}
-                height={this.props.height}
+                width={~~width}
+                height={~~height}
             />
         );
     }
 }
 
-export { StageComponentImpl as StageComponent }
+export {StageComponentImpl as StageComponent}
 export * from "./types";

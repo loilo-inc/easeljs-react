@@ -8,25 +8,16 @@
 // layout, paint and other browser work is counted against the available time.
 // The frame rate is dynamically adjusted.
 
-var ExecutionEnvironment = require('fbjs/lib/ExecutionEnvironment');
+import {kHasNativePerformanceNow} from "./now";
 
-const hasNativePerformanceNow =
-    typeof performance === 'object' && typeof performance.now === 'function';
+const kCanUseDOM = typeof window !== 'undefined' &&
+    window.document &&
+    window.document.createElement;
 
-let _now;
-if (hasNativePerformanceNow) {
-    _now = function () {
-        return performance.now();
-    };
-} else {
-    _now = function () {
-        return Date.now();
-    };
-}
 
 // TODO: There's no way to cancel, because Fiber doesn't atm.
 let _rIC;
-if (!ExecutionEnvironment.canUseDOM) {
+if (!kCanUseDOM) {
     _rIC = function (frameCallback) {
         setTimeout(() => {
             frameCallback({
@@ -54,7 +45,7 @@ if (!ExecutionEnvironment.canUseDOM) {
     var activeFrameTime = 33;
 
     var frameDeadlineObject;
-    if (hasNativePerformanceNow) {
+    if (kHasNativePerformanceNow) {
         frameDeadlineObject = {
             timeRemaining() {
                 // We assume that if we have a performance timer that the rAF callback
@@ -146,5 +137,4 @@ if (!ExecutionEnvironment.canUseDOM) {
     _rIC = global["requestIdleCallback"];
 }
 
-export const now = _now;
-export const rIC = _rIC;
+export {_rIC as requestIdleCallback};
