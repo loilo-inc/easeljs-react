@@ -75,10 +75,11 @@ You are using id = "${props.id}"`;
 }
 
 function updatePicture(node: Stage | DisplayObject) {
-    const {stage} = node;
-    if (stage) {
-        stage.update();
-    }
+    //TODO: update should be done by manually.
+    // const {stage} = node;
+    // if (stage) {
+    //     stage.update();
+    // }
 }
 
 const UPDATE_SIGNAL = {};
@@ -181,20 +182,23 @@ const Renderer = ReactFiberReconciler({
             updatePicture(parentInstance);
         },
 
-        insertBefore(parentInstance: Container, child: DisplayObject, beforeChild) {
-            if (child !== beforeChild) {
+        insertBefore(parentInstance: Container, child: DisplayObject, beforeChild: DisplayObject) {
+            if (child === beforeChild) {
                 throw new Error('easeljs-react: Can not insert node before itself');
             }
             // remove and add back to reset zIndex
-            parentInstance.setChildIndex(child, parentInstance.numChildren - 1);
+            const idx = parentInstance.getChildIndex(beforeChild);
+            parentInstance.setChildIndex(child, idx - 1);
             updatePicture(parentInstance);
         },
 
-        insertInContainerBefore(parentInstance: Container, child: DisplayObject, beforeChild) {
-            if (child !== beforeChild) {
+        insertInContainerBefore(parentInstance: Container, child: DisplayObject, beforeChild: DisplayObject) {
+            if (child === beforeChild) {
                 throw new Error('createjs: Can not insert node before itself');
             }
             // remove and add back to reset zIndex
+            const idx = parentInstance.getChildIndex(beforeChild);
+            parentInstance.setChildIndex(child, idx - 1);
             parentInstance.setChildIndex(child, parentInstance.numChildren - 1);
             updatePicture(parentInstance);
         },
