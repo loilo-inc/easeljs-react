@@ -10,7 +10,7 @@ import Shadow = createjs.Shadow;
 import Filter = createjs.Filter;
 import BitmapCache = createjs.BitmapCache;
 import Graphics = createjs.Graphics;
-import {HTMLAttributes} from "react";
+import {CanvasHTMLAttributes, HTMLAttributes} from "react";
 
 export type DisplayObjectProps = {
     // properties
@@ -81,7 +81,7 @@ export type StageProps = {
     onDrawEnd?: (ev: createjs.MouseEvent) => void
 }
 
-export class StageComponent extends React.Component<StageProps & HTMLAttributes<HTMLCanvasElement>> {
+export class StageComponent extends React.Component<StageProps & CanvasHTMLAttributes<HTMLCanvasElement>> {
     readonly stage: Stage;
 }
 
