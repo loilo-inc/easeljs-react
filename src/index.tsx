@@ -186,8 +186,11 @@ const Renderer = ReactFiberReconciler({
             if (child === beforeChild) {
                 throw new Error('easeljs-react: Can not insert node before itself');
             }
+            if (child.parent) {
+                child.parent.removeChild(child);
+            }
             const idx = parentInstance.getChildIndex(beforeChild);
-            parentInstance.setChildIndex(child, idx);
+            parentInstance.addChildAt(child,idx);
             updatePicture(parentInstance);
         },
 
@@ -195,8 +198,11 @@ const Renderer = ReactFiberReconciler({
             if (child === beforeChild) {
                 throw new Error('createjs: Can not insert node before itself');
             }
+            if (child.parent) {
+                child.parent.removeChild(child);
+            }
             const idx = parentInstance.getChildIndex(beforeChild);
-            parentInstance.setChildIndex(child, idx);
+            parentInstance.addChildAt(child, idx);
             updatePicture(parentInstance);
         },
 

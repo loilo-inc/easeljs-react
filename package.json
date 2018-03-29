@@ -3,9 +3,14 @@
   "version": "0.0.1",
   "author": "Yusuke Sakurai<kerokerokerop@gmail.com>",
   "repository": "https://github.com/loilo-inc/easeljs-react",
-  "bugs":  "https://github.com/loilo-inc/easeljs-react/issues",
+  "bugs": "https://github.com/loilo-inc/easeljs-react/issues",
   "main": "lib/index.js",
-  "keywords": ["easeljs", "createjs", "react", "react-reconciler"],
+  "keywords": [
+    "easeljs",
+    "createjs",
+    "react",
+    "react-reconciler"
+  ],
   "types": [
     "index.d.ts"
   ],
@@ -14,7 +19,7 @@
     "start": "npm run build && npm run serve",
     "check": "npm run build && npm run test",
     "build": "npm run build-ts",
-    "lib"  : "tsc -p ./tsconfig.lib.json",
+    "lib": "tsc -p ./tsconfig.lib.json",
     "build2": "npm run build && npm run browserify",
     "lint": "tslint src/**/*.ts -p ./tslint.json",
     "build-ts": "tsc",
