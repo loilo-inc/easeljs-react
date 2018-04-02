@@ -1,9 +1,15 @@
 {
-  "name": "easeljs-react",
+  "name": "@loilo-inc/easeljs-react",
   "version": "0.0.1",
-  "author": "Yusuke Sakurai<kerokerokerop@gmail.com>",
-  "repository": "https://github.com/loilo-inc/easeljs-react",
-  "bugs": "https://github.com/loilo-inc/easeljs-react/issues",
+  "author": "Yusuke Sakurai <kerokerokerop@gmail.com>",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/loilo-inc/easeljs-react.git"
+  },
+  "bugs": {
+    "url": "https://github.com/loilo-inc/easeljs-react/issues"
+  },
   "main": "lib/index.js",
   "keywords": [
     "easeljs",
@@ -50,5 +56,11 @@
   "browserify-shim": {
     "easeljs": "global:createjs",
     "react": "global:React"
+  },
+  "description": "React - EaselJS bindings with React Reconciler",
+  "homepage": "https://github.com/loilo-inc/easeljs-react#readme",
+  "directories": {
+    "example": "example",
+    "lib": "lib"
   }
 }
