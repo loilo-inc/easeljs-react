@@ -31,7 +31,7 @@ You are using id = "${props.id}"`;
         if (kPropsToSkip[key]) {
             continue;
         }
-        // onXXX系のイベント
+        // events
         const isEvent = key.slice(0, 2) === 'on';
         const propChanged = oldProps[key] !== props[key];
         if (isEvent && propChanged) {
@@ -75,11 +75,11 @@ You are using id = "${props.id}"`;
 }
 
 function updatePicture(node: Stage | DisplayObject) {
-    //TODO: update should be done by manually.
-    // const {stage} = node;
-    // if (stage) {
-    //     stage.update();
-    // }
+    //TODO: should update be done manually?
+    const {stage} = node;
+    if (stage) {
+        stage.update();
+    }
 }
 
 const UPDATE_SIGNAL = {};
@@ -196,7 +196,7 @@ const Renderer = ReactFiberReconciler({
 
         insertInContainerBefore(parentInstance: Container, child: DisplayObject, beforeChild: DisplayObject) {
             if (child === beforeChild) {
-                throw new Error('createjs: Can not insert node before itself');
+                throw new Error('easeljs-react: Can not insert node before itself');
             }
             if (child.parent) {
                 child.parent.removeChild(child);
@@ -242,7 +242,7 @@ const foundDevTools = Renderer.injectIntoDevTools({
     findFiberByHostInstance: getClosestInstanceFromNode,
     bundleType: process.env.NODE_ENV !== 'production' ? 1 : 0,
     version: React.version || 16,
-    rendererPackageName: 'createjs-react',
+    rendererPackageName: 'easeljs-react',
     getInspectorDataForViewTag: (...args) => {
         console.log(args);
     }
