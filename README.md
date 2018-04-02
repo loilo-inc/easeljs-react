@@ -77,7 +77,7 @@ class CanvasComponent extends React.Component {
               <ShapeComponent graphics={this.state.graphics}/>
               <ContainerComponent
                 x={100} y={200}
-                ref={n => n && this.textContainer = n} >
+                ref={n => n && (this.textContainer = n)} >
                   <TextComponent
                       font={"20pt Arial"}
                       color={"white"}
@@ -88,6 +88,18 @@ class CanvasComponent extends React.Component {
   }
 }
 ```
+
+## Demo
+
+```
+npm install && npm start && open http://localhost:5000
+```
+
+## React Dev Tools
+
+You can see EaselJS component tree in your [React Developer Tools](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi)
+
+![https://gyazo.com/8ab986542be92532d57bd1c1abadcc9e.png](https://gyazo.com/8ab986542be92532d57bd1c1abadcc9e.png)
 
 ## Components
 
@@ -115,8 +127,8 @@ class CanvasComponent extends React.Component {
   render() {
     <StageComponent
         width={640} height={480}
-        ref={n => n && this.stage = n.stage}>
-        <ShapeComponent ref={n => n && this.shape = shape} />                       
+        ref={n => n && (this.stage = n.stage)}>
+        <ShapeComponent ref={n => n && (this.shape = n)} />                       
     </StageComponent>
   }
 }
@@ -133,8 +145,8 @@ class CanvasComponent extends React.Component {
   render() {
     <StageComponent
         width={640} height={480}
-        ref={n => n && this.stage = n.stage}>
-        <ShapeComponent ref={n => n && this.shape = n.getPublicInstance()} />                       
+        ref={n => n ? this.stage = n.stage}>
+        <ShapeComponent ref={n => n && (this.shape = n.getPublicInstance())} />                       
     </StageComponent>
   }
 }
@@ -146,7 +158,7 @@ PR Welcome!
 There are still no code convention or rules.
 Feel free to open issues and create pull-request.
 
-### Note!
+### Be Typed!
 We are using TypeScript as primary development language. codes under `src` directory are active source code and `lib` are generated codes for publishing, keep it untouch.
 
 ## Licence
