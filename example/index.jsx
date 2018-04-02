@@ -7,58 +7,69 @@ const Stage = createjs.Stage;
 import {BitmapComponent, ContainerComponent, ShapeComponent, TextComponent} from "../src";
 
 class IndexComponent extends React.Component {
-    image;
     stage;
     shape;
     state = {
         bitmapX: 0,
-        bitmapY: 0
+        bitmapY: 0,
+        textColor: "white",
+        image: null
     };
 
-    constructor(props) {
-        super(props);
-        this.image = new Image();
-    }
 
     componentDidMount() {
-        this.image.src = "public/img/loilo.png";
-        this.image.onload = () => {
-            this.onTick();
-            this.stage.update();
+        const image = new Image();
+        image.src = "public/img/mandrill.png";
+        image.onload = () => {
+            this.setState({image});
         };
-        setInterval(this.update.bind(this), 32);
+        setInterval(() => {
+            this.update();
+        }, 16);
     }
 
     update() {
-        this.onTick();
-        this.stage.update();
-    }
-
-    onTick() {
         this.shape.graphics
             .clear()
             .beginStroke("red")
             .drawRect(0, 0, 100, 100)
             .endStroke();
+        this.stage.update();
     }
 
+    points = [];
     onDown(ev) {
         console.log("onDown");
+        this.points = [];
+        this.points.push({
+            x: ev.stageX, y: ev.stageY
+        });
         this.setState({
-            bitmapX: ev.stageX,
-            bitmapY: ev.stageY
+            textColor: "red"
         })
     }
 
     onPressMove(ev) {
+        this.points.push({
+            x: ev.stageX, y: ev.stageY
+        });
+        const len = this.points.length;
+        let [prev, curr] = [this.points[len-2], this.points[len-1]];
+        let [dx,dy] = [curr.x-prev.x,curr.y-prev.y];
         this.setState({
-            bitmapX: ev.stageX,
-            bitmapY: ev.stageY
-        })
+            bitmapX: this.state.bitmapX+dx,
+            bitmapY: this.state.bitmapY+dy
+        });
     }
 
     onPressUp(ev) {
+        this.points.push({
+            x: ev.stageX, y: ev.stageY
+        });
         console.log("onUp");
+        this.setState({
+            textColor: "white"
+        });
     }
 
     _render() {
@@ -76,32 +87,32 @@ class IndexComponent extends React.Component {
         container.y = 200;
         stage.addChild(bitmap, shape, container);
     }
+    handlers = {};
+    identifyHandler(func, id) {
+        return this.handlers[id] || (this.handlers[id] = func.bind(this));
+    }
 
     render() {
         return (
             <StageComponent
                 autoClear={true}
                 ref={n => {
-                    if (!n) return;
-                    this.stage = n._stage
+                    n && (this.stage = n.stage)
                 }}
-                width={1024} height={768}
-            >
-                <BitmapComponent image={this.image}
+                width={1024} height={768}>
+                <BitmapComponent image={this.state.image}
                                  x={this.state.bitmapX}
                                  y={this.state.bitmapY}
-                                 onMouseDown={this.onDown.bind(this)}
-                                 onPressMove={this.onPressMove.bind(this)}
-                                 onPressUp={this.onPressUp.bind(this)}
-                />
+                                 onMouseDown={this.identifyHandler(this.onDown,"onDown")}
+                                 onPressMove={this.identifyHandler(this.onPressMove, "onPressMove")}
+                                 onPressUp={this.identifyHandler(this.onPressUp, "onPressUp")}/>
                 <ShapeComponent ref={n => {
-                    if (!n) return;
-                    this.shape = n.getPublicInstance();
+                    n && (this.shape = n.getPublicInstance());
                 }}/>
                 <ContainerComponent x={100} y={200}>
                     <TextComponent
                         font={"20pt Arial"}
-                        color={"white"}
+                        color={this.state.textColor}
                         text={"hello world!"}/>
                 </ContainerComponent>
             </StageComponent>

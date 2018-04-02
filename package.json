@@ -1,8 +1,7 @@
 {
-  "name": "@loilo-inc/easeljs-react",
+  "name": "easeljs-react",
   "version": "0.0.1",
   "author": "Yusuke Sakurai <kerokerokerop@gmail.com>",
-  "private": true,
   "repository": {
     "type": "git",
     "url": "git+https://github.com/loilo-inc/easeljs-react.git"
@@ -22,8 +21,7 @@
   ],
   "license": "MIT",
   "scripts": {
-    "start": "npm run build && npm run serve",
-    "check": "npm run build && npm run test",
+    "start": "npm run build2 && serve .",
     "build": "npm run build-ts",
     "lib": "tsc -p ./tsconfig.lib.json",
     "build2": "npm run build && npm run browserify",
@@ -40,7 +38,8 @@
     "easeljs": "^1.0.2",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
-    "react-reconciler": "^0.7.0"
+    "react-reconciler": "^0.7.0",
+    "serve": "^6.5.3"
   },
   "devDependencies": {
     "@types/easeljs": "^1.0.0",
