@@ -81,6 +81,9 @@ export type StageProps = {
     onTickEnd?: (ev: createjs.MouseEvent) => void
     onDrawStart?: (ev: createjs.MouseEvent) => void
     onDrawEnd?: (ev: createjs.MouseEvent) => void
+    // easeljs-react extended
+    onContainerMounted?: (stage: Stage) => void
+    onContainerUpdated?: (stage: Stage) => void
 }
 
 export class StageComponent extends React.Component<StageProps & CanvasHTMLAttributes<HTMLCanvasElement>> {
