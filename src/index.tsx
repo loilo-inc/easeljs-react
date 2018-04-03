@@ -50,6 +50,11 @@ You are using id = "${props.id}"`;
         if (kPropsToSkip[key]) {
             continue;
         }
+        if (key === "bounds") {
+            const bounds = props[key] || {x: null};
+            instance.setBounds(bounds.x, bounds.y, bounds.width, bounds.height);
+            continue;
+        }
         const isEvent = key.slice(0, 2) === 'on';
         const toAdd = oldProps[key] !== props[key];
         if (isEvent && toAdd) {
@@ -190,7 +195,7 @@ const Renderer = ReactFiberReconciler({
                 child.parent.removeChild(child);
             }
             const idx = parentInstance.getChildIndex(beforeChild);
-            parentInstance.addChildAt(child,idx);
+            parentInstance.addChildAt(child, idx);
             updatePicture(parentInstance);
         },
 

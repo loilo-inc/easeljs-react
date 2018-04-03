@@ -54,6 +54,8 @@ export type DisplayObjectProps = {
     onRollOut?: (ev: createjs.MouseEvent) => void
     onRollOver?: (ev: createjs.MouseEvent) => void
     onTick?: () => void
+    // easeljs-react extended
+    bounds?: {x: number, y: number, width: number, height: number}
 }
 
 export class DisplayObjectComponent<N extends DisplayObject, P = {}> extends React.Component<P & DisplayObjectProps> {

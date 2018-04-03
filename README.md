@@ -50,6 +50,18 @@ class CanvasComponent extends React.Component {
       graphics: new Graphics(),
       text: "hello world!"
     };
+    // Note: make reference setters and event handlers idendified.
+    // avoid passing anonymous function props to Component.
+    this.onMouseDown = ev => this.handleMouseDown(ev);
+    this.onPressUp   = ev => this.handlePressUp(ev);
+    this.setStageRef = n => this.stage = n.stage;
+    this.setTextContainerRef = n => this.textContainer = n;
+  }
+  handleMouseDown(ev) {
+    console.log(`down: ${ev.stageX},${ev.stageY}`);
+  }
+  handlePressUp(ev) {
+    console.log(`up: ${ev.stageX},${ev.stageY}`);
   }
   componentDidMount() {
     const image = new Image();
@@ -58,26 +70,22 @@ class CanvasComponent extends React.Component {
       this.setState({image});            
     }
   }
-  handlers = {};
-  identifyHandler(handler, id) {
-    return handlers[id] || (handlers[id] = handler.bind(this));
-  }
+
   render() {
       return (
           <StageComponent
               autoClear={true}              
               width={1024} height={768}
-              ref={n => n && this.stage = n.stage;}>
+              ref={this.setStageRef}>
               <BitmapComponent image={this.state.image}
                                x={this.state.bitmapX}
                                y={this.state.bitmapY}
-                               onMouseDown={this.identifyHandler(this.onDown,"onDown")}
-                               onPressMove={this.identifyHandler(this.onMove,"onMove")}
-                               onPressUp={this.identifyHandler(this.onUp,"onUp") />
-              <ShapeComponent graphics={this.state.graphics}/>
+                               onMouseDown={this.onMouseDown}
+                               onPressUp={this.onPressUp} />
+              <ShapeComponent graphics={this.state.graphics}
+                              bounds={new Rectangle(0,0,100,100)}/>
               <ContainerComponent
-                x={100} y={200}
-                ref={n => n && (this.textContainer = n)} >
+                x={100} y={200} ref={this.setTextContainerRef} >
                   <TextComponent
                       font={"20pt Arial"}
                       color={"white"}
@@ -123,12 +131,13 @@ So you can use bound components as easeljs object:
 ```js
 class CanvasComponent extends React.Component {
   stage;
-  shape;
+  shape;  
+  setStageRef = n => this.stage = n.stage;
+  setShapeRef = n => this.shape = n;  
   render() {
     <StageComponent
-        width={640} height={480}
-        ref={n => n && (this.stage = n.stage)}>
-        <ShapeComponent ref={n => n && (this.shape = n)} />                       
+        width={640} height={480} ref={this.setStageRef}>
+        <ShapeComponent ref={this.setShapeRef} />                       
     </StageComponent>
   }
 }
@@ -142,11 +151,12 @@ So just call `getPublicInstance()` method for getting reference to easeljs objec
 class CanvasComponent extends React.Component {
   stage: Stage;
   shape: Shape;
+  setStageRef = n => this.stage = n.stage;
+  setShapeRef = n => this.shape = n.getPublicInstance();
   render() {
     <StageComponent
-        width={640} height={480}
-        ref={n => n ? this.stage = n.stage}>
-        <ShapeComponent ref={n => n && (this.shape = n.getPublicInstance())} />                       
+        width={640} height={480} ref={this.setStageRef}>
+        <ShapeComponent ref={this.setShapeRef} />                       
     </StageComponent>
   }
 }
