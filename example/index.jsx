@@ -20,6 +20,7 @@ class IndexComponent extends React.Component {
     };
 
     componentDidMount() {
+        console.log("containerDidMount");
         const image = new Image();
         image.src = "public/img/mandrill.png";
         image.onload = () => {
@@ -29,6 +30,14 @@ class IndexComponent extends React.Component {
             this.update();
         }, 16);
     }
+
+    onContainerMounted = (stage) => {
+        console.log("onContainerMounted: childCnt=", stage.children.length)
+    };
+
+    onContainerUpdated = (stage) => {
+        console.log("onContainerUpdated");
+    };
 
     update() {
         const bounds = this.shape.getBounds();
@@ -50,7 +59,7 @@ class IndexComponent extends React.Component {
         this.setState({
             textColor: "red"
         })
-    }
+    };
 
     onPressMove = (ev) => {
         this.points.push({
@@ -63,7 +72,7 @@ class IndexComponent extends React.Component {
             bitmapX: this.state.bitmapX+dx,
             bitmapY: this.state.bitmapY+dy
         });
-    }
+    };
 
     onPressUp = (ev) => {
         this.points.push({
@@ -73,30 +82,17 @@ class IndexComponent extends React.Component {
         this.setState({
             textColor: "white"
         });
-    }
-
-    _render() {
-        // obsolete way.
-        const stage = new createjs.Stage("canvas");
-        const bitmap = new createjs.Bitmap(this.image);
-        const shape = new createjs.Shape();
-        const container = new createjs.Container();
-        const text = new createjs.Text();
-        text.font = "20pt Arial";
-        text.color = "white";
-        text.text = "hello world!";
-        container.addChild(text);
-        container.x = 100;
-        container.y = 200;
-        stage.addChild(bitmap, shape, container);
-    }
+    };
 
     render() {
         return (
             <StageComponent
                 autoClear={true}
                 ref={this.setStageRef}
-                width={1024} height={768}>
+                width={1024} height={768}
+                onContainerMounted={this.onContainerMounted}
+                onContainerUpdated={this.onContainerUpdated}
+            >
                 <BitmapComponent image={this.state.image}
                                  x={this.state.bitmapX}
                                  y={this.state.bitmapY}

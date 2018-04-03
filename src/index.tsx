@@ -260,20 +260,29 @@ class StageComponentImpl
     get stage() {
         return this._stage;
     }
+    private _canvas;
+    readonly setCanvasRef = n => this._canvas = n;
 
     private _mountNode;
-    private _tagRef;
 
     componentDidMount() {
-        this._stage = new createjs.Stage(this._tagRef);
+        this._stage = new createjs.Stage(this._canvas);
         applyNodeProps(this._stage, this.props);
         this._mountNode = Renderer.createContainer(this._stage);
-        Renderer.updateContainer(this.props.children, this._mountNode, this);
+        Renderer.updateContainer(this.props.children, this._mountNode, this, () => {
+            if (this.props.onContainerMounted) {
+                this.props.onContainerMounted(this._stage);
+            }
+        });
     }
 
     componentDidUpdate(prevProps, prevState) {
         applyNodeProps(this._stage, this.props, prevProps);
-        Renderer.updateContainer(this.props.children, this._mountNode, this);
+        Renderer.updateContainer(this.props.children, this._mountNode, this, () => {
+            if (this.props.onContainerUpdated) {
+                this.props.onContainerUpdated(this._stage);
+            }
+        });
     }
 
     componentWillUnmount() {
@@ -286,7 +295,7 @@ class StageComponentImpl
         return (
             <canvas
                 className={this.props.className}
-                ref={ref => (this._tagRef = ref)}
+                ref={this.setCanvasRef}
                 width={~~width}
                 height={~~height}
             />
