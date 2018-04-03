@@ -1,5 +1,7 @@
 # easeljs-react
 
+[![npm version](https://badge.fury.io/js/easeljs-react.svg)](https://badge.fury.io/js/easeljs-react)
+
 React/EaselJS bindings with React Reconciler
 
 ## Description
