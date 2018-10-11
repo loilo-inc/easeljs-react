@@ -295,6 +295,7 @@ class StageComponentImpl
         return (
             <canvas
                 className={this.props.className}
+                style={this.props.style}
                 ref={this.setCanvasRef}
                 width={~~width}
                 height={~~height}
