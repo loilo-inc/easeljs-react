@@ -1,13 +1,12 @@
-import DisplayObject = createjs.DisplayObject;
-import Container = createjs.Container;
-import Stage = createjs.Stage;
 import * as React from "react";
 import * as ReactFiberReconciler from 'react-reconciler';
 import {requestIdleCallback} from './ric';
 import {now} from "./now";
 import {getClosestInstanceFromNode} from './dom-tree';
-import {StageComponent, StageProps} from "../index";
+import {StageComponent, StageProps} from "../types";
 import {CanvasHTMLAttributes} from "react";
+import {Container, DisplayObject, Text, Stage} from "@createjs/easeljs";
+import {CreateJSTypes} from "./types";
 
 const kPropsToSkip = {children: true, ref: true, key: true, style: true};
 
@@ -101,7 +100,7 @@ const Renderer = ReactFiberReconciler({
     },
 
     createInstance(type: string, props: { [key: string]: any }, internalInstanceHandle) {
-        const NodeClass = createjs[type];
+        const NodeClass = CreateJSTypes[type];
         if (!NodeClass) {
             throw new Error(`createjs does not support the type "${type}"`);
         }
@@ -223,7 +222,7 @@ const Renderer = ReactFiberReconciler({
             updatePicture(parentInstance);
         },
 
-        commitTextUpdate(textInstance: createjs.Text, oldText: string, newText: string) {
+        commitTextUpdate(textInstance: Text, oldText: string, newText: string) {
             textInstance.text = newText;
             updatePicture(textInstance.parent);
         },
@@ -256,17 +255,18 @@ const foundDevTools = Renderer.injectIntoDevTools({
 class StageComponentImpl
     extends React.Component<StageProps & CanvasHTMLAttributes<HTMLCanvasElement>>
     implements StageComponent {
-    private _stage: createjs.Stage;
+    private _stage: Stage;
     get stage() {
         return this._stage;
     }
+
     private _canvas;
     readonly setCanvasRef = n => this._canvas = n;
 
     private _mountNode;
 
     componentDidMount() {
-        this._stage = new createjs.Stage(this._canvas);
+        this._stage = new Stage(this._canvas);
         applyNodeProps(this._stage, this.props);
         this._mountNode = Renderer.createContainer(this._stage);
         Renderer.updateContainer(this.props.children, this._mountNode, this, () => {

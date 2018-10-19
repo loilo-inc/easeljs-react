@@ -1,16 +1,13 @@
 import * as React from "react";
 import {render} from "react-dom";
-import {StageComponent} from "../src";
+import {Rectangle, Shape, Stage} from "@createjs/easeljs";
+import {StageComponent, BitmapComponent, ContainerComponent, ShapeComponent, TextComponent} from "easeljs-react";
 
-const Shape = createjs.Shape;
-const Stage = createjs.Stage;
-const Rectangle = createjs.Rectangle;
-import {BitmapComponent, ContainerComponent, ShapeComponent, TextComponent} from "../src";
-
+console.log(Rectangle);
 class IndexComponent extends React.Component {
-    stage;
+    stage: Stage;
     setStageRef = n => this.stage = n.stage;
-    shape;
+    shape: Shape;
     setShapeRef = n => this.shape = n.getPublicInstance();
     state = {
         bitmapX: 0,
@@ -66,11 +63,11 @@ class IndexComponent extends React.Component {
             x: ev.stageX, y: ev.stageY
         });
         const len = this.points.length;
-        let [prev, curr] = [this.points[len-2], this.points[len-1]];
-        let [dx,dy] = [curr.x-prev.x,curr.y-prev.y];
+        let [prev, curr] = [this.points[len - 2], this.points[len - 1]];
+        let [dx, dy] = [curr.x - prev.x, curr.y - prev.y];
         this.setState({
-            bitmapX: this.state.bitmapX+dx,
-            bitmapY: this.state.bitmapY+dy
+            bitmapX: this.state.bitmapX + dx,
+            bitmapY: this.state.bitmapY + dy
         });
     };
 
@@ -91,8 +88,7 @@ class IndexComponent extends React.Component {
                 ref={this.setStageRef}
                 width={1024} height={768}
                 onContainerMounted={this.onContainerMounted}
-                onContainerUpdated={this.onContainerUpdated}
-            >
+                onContainerUpdated={this.onContainerUpdated}>
                 <BitmapComponent image={this.state.image}
                                  x={this.state.bitmapX}
                                  y={this.state.bitmapY}
@@ -100,7 +96,7 @@ class IndexComponent extends React.Component {
                                  onPressMove={this.onPressMove}
                                  onPressUp={this.onPressUp}/>
                 <ShapeComponent ref={this.setShapeRef}
-                                bounds={new Rectangle(0,0,100,100)}/>
+                                bounds={new Rectangle(0, 0, 100, 100)}/>
                 <ContainerComponent x={100} y={200}>
                     <TextComponent
                         font={"20pt Arial"}

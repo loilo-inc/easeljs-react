@@ -6,17 +6,40 @@
     "outDir": "dist",
     "jsx": "react",
     "baseUrl": ".",
+    "lib": [
+      "es2015",
+      "dom"
+    ],
+    "typeRoots": [
+      "node_modules/@types",
+      "types"
+    ],
+    "paths": {
+      "easeljs-react": [
+        "./types"
+      ],
+      "@createjs/core": [
+        "./types/createjs__core"
+      ],
+      "@createjs/easeljs": [
+        "./types/createjs__easeljs"
+      ],
+      "@createjs/tweenjs": [
+        "./types/createjs__tweenjs"
+      ]
+    },
     "allowJs": true
   },
   "exclude": [
     "node_modules"
   ],
   "include": [
+    "types/**/*.ts",
     "src/**/*.js",
     "src/**/*.jsx",
     "src/**/*.ts",
     "src/**/*.tsx",
     "example/**/*.ts",
-    "example/**/*.jsx"
+    "example/**/*.tsx"
   ]
 }

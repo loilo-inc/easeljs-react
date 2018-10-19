@@ -1,6 +1,6 @@
 {
   "name": "easeljs-react",
-  "version": "0.1.1",
+  "version": "0.2.0-alpha1",
   "author": "Yusuke Sakurai <kerokerokerop@gmail.com>",
   "repository": {
     "type": "git",
@@ -9,7 +9,7 @@
   "bugs": {
     "url": "https://github.com/loilo-inc/easeljs-react/issues"
   },
-  "main": "lib/index.js",
+  "main": "dist/src/index.js",
   "keywords": [
     "easeljs",
     "createjs",
@@ -17,14 +17,15 @@
     "react-reconciler"
   ],
   "types": [
-    "index.d.ts"
+    "types/index.d.ts",
+    "types/createjs_core/index.d.ts",
+    "types/createjs_easeljs/index.d.ts",
+    "types/createjs_tweenjs/index.d.ts"
   ],
   "license": "MIT",
   "scripts": {
     "start": "npm run build2 && serve .",
-    "build": "npm run build-ts",
-    "lib": "tsc -p ./tsconfig.lib.json",
-    "build2": "npm run build && npm run browserify",
+    "build": "npm run build-ts && npm run browserify",
     "lint": "tslint src/**/*.ts -p ./tslint.json",
     "build-ts": "tsc",
     "watch-ts": "tsc -w",
@@ -35,20 +36,20 @@
     "clean": "rm -rf dist/*"
   },
   "dependencies": {
-    "easeljs": "^1.0.2",
+    "@createjs/easeljs": "^2.0.0-beta.3",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
-    "react-reconciler": "^0.7.0",
-    "serve": "^6.5.3"
+    "react-reconciler": "^0.7.0"
   },
   "devDependencies": {
-    "@types/easeljs": "^1.0.0",
     "@types/node": "^9.4.7",
     "@types/react": "^16.0.40",
     "browserify": "^16.1.1",
     "browserify-shim": "^3.8.14",
     "chokidar-cli": "^1.2.0",
     "parallelshell": "^3.0.2",
+    "serve": "^6.5.3",
+    "tsify": "^4.0.0",
     "typescript": "^2.7.2",
     "watchify": "^3.11.0"
   },

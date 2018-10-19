@@ -1,16 +1,19 @@
 import * as React from "react";
-import Container = createjs.Container;
-import DisplayObject = createjs.DisplayObject;
-import Shape = createjs.Shape;
-import Bitmap = createjs.Bitmap;
-import Rectangle = createjs.Rectangle;
-import Matrix2D = createjs.Matrix2D;
-import Stage = createjs.Stage;
-import Shadow = createjs.Shadow;
-import Filter = createjs.Filter;
-import BitmapCache = createjs.BitmapCache;
-import Graphics = createjs.Graphics;
+
 import {CanvasHTMLAttributes, HTMLAttributes} from "react";
+import {
+    Bitmap,
+    BitmapCache,
+    Container,
+    DisplayObject,
+    Filter, Graphics,
+    Matrix2D,
+    Rectangle,
+    Shadow,
+    Shape,
+    Text,
+    Stage
+} from "@createjs/easeljs";
 
 export type DisplayObjectProps = {
     // properties
@@ -42,17 +45,17 @@ export type DisplayObjectProps = {
     visible?: boolean;
     x?: number;
     y?: number;
-    onAdded?: (ev: createjs.MouseEvent) => void
-    onClick?: (ev: createjs.MouseEvent) => void
-    onDblClick?: (ev: createjs.MouseEvent) => void
-    onMouseDown?: (ev: createjs.MouseEvent) => void
-    onMouseOut?: (ev: createjs.MouseEvent) => void
-    onMouseOver?: (ev: createjs.MouseEvent) => void
-    onPressMove?: (ev: createjs.MouseEvent) => void
-    onPressUp?: (ev: createjs.MouseEvent) => void
+    onAdded?: (ev: MouseEvent) => void
+    onClick?: (ev: MouseEvent) => void
+    onDblClick?: (ev: MouseEvent) => void
+    onMouseDown?: (ev: MouseEvent) => void
+    onMouseOut?: (ev: MouseEvent) => void
+    onMouseOver?: (ev: MouseEvent) => void
+    onPressMove?: (ev: MouseEvent) => void
+    onPressUp?: (ev: MouseEvent) => void
     onRemoved?: () => void
-    onRollOut?: (ev: createjs.MouseEvent) => void
-    onRollOver?: (ev: createjs.MouseEvent) => void
+    onRollOut?: (ev: MouseEvent) => void
+    onRollOver?: (ev: MouseEvent) => void
     onTick?: () => void
     // easeljs-react extended
     bounds?: {x: number, y: number, width: number, height: number}
@@ -72,15 +75,15 @@ export type StageProps = {
     mouseX?: number;
     mouseY?: number;
     nextStage?: Stage;
-    onStageMouseDown?: (ev: createjs.MouseEvent) => void
-    onStageMouseMove?: (ev: createjs.MouseEvent) => void
-    onStageMouseUp?: (ev: createjs.MouseEvent) => void
-    onMouseEnter?: (ev: createjs.MouseEvent) => void
-    onMouseLeave?: (ev: createjs.MouseEvent) => void
-    onTickStart?: (ev: createjs.MouseEvent) => void
-    onTickEnd?: (ev: createjs.MouseEvent) => void
-    onDrawStart?: (ev: createjs.MouseEvent) => void
-    onDrawEnd?: (ev: createjs.MouseEvent) => void
+    onStageMouseDown?: (ev: MouseEvent) => void
+    onStageMouseMove?: (ev: MouseEvent) => void
+    onStageMouseUp?: (ev: MouseEvent) => void
+    onMouseEnter?: (ev: MouseEvent) => void
+    onMouseLeave?: (ev: MouseEvent) => void
+    onTickStart?: (ev: MouseEvent) => void
+    onTickEnd?: (ev: MouseEvent) => void
+    onDrawStart?: (ev: MouseEvent) => void
+    onDrawEnd?: (ev: MouseEvent) => void
     // easeljs-react extended
     onContainerMounted?: (stage: Stage) => void
     onContainerUpdated?: (stage: Stage) => void
@@ -121,5 +124,5 @@ export type TextProps = {
     textBaseline?: string;
 } & DisplayObjectProps;
 
-export class TextComponent extends DisplayObjectComponent<createjs.Text, TextProps> {
+export class TextComponent extends DisplayObjectComponent<Text, TextProps> {
 }
