@@ -102,7 +102,7 @@ class CanvasComponent extends React.Component {
 ## Demo
 
 ```
-npm install && npm start && open http://localhost:5000
+yarn install && yarn start && open http://localhost:5000
 ```
 
 ## React Dev Tools
