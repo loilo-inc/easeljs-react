@@ -1,6 +1,6 @@
 {
   "name": "easeljs-react",
-  "version": "0.2.0-alpha2",
+  "version": "0.2.0",
   "author": "Yusuke Sakurai <kerokerokerop@gmail.com>",
   "repository": {
     "type": "git",

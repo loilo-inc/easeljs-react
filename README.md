@@ -26,9 +26,9 @@ yarn add easeljs-react
 
 Currently easeljs-react depends on [react-reconciler](https://github.com/facebook/react/tree/master/packages/react-reconciler) that is used in React Fiber. So dependencies below are required.
 
-- react >= 16.2.0
-- react-dom >= 16.2.0
-- react-reconciler >= 0.7.0
+- react ^16.8.2
+- react-dom ^16.8.2
+- react-reconciler ^0.18.0
 
 ## Usage
 
