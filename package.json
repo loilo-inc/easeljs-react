@@ -45,13 +45,12 @@
     "@types/react": "^16.8.2",
     "@types/react-dom": "^16.8.2",
     "@types/react-reconciler": "^0.18.0",
-    "browserify": "^16.1.1",
-    "browserify-shim": "^3.8.14",
-    "chokidar-cli": "^1.2.0",
+    "browserify": "^16.2.3",
+    "chokidar-cli": "^1.2.2",
     "parallelshell": "^3.0.2",
-    "serve": "^6.5.3",
+    "serve": "^10.1.2",
     "typescript": "^3.3.3",
-    "watchify": "^3.11.0"
+    "watchify": "^3.11.1"
   },
   "description": "React - EaselJS bindings with React Reconciler",
   "homepage": "https://github.com/loilo-inc/easeljs-react#readme",
