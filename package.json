@@ -1,6 +1,6 @@
 {
   "name": "easeljs-react",
-  "version": "0.1.1",
+  "version": "0.2.0-alpha1",
   "author": "Yusuke Sakurai <kerokerokerop@gmail.com>",
   "repository": {
     "type": "git",
@@ -28,20 +28,19 @@
     "lint": "tslint src/**/*.ts -p ./tslint.json",
     "build-ts": "tsc",
     "watch-ts": "tsc -w",
-    "browserify": "browserify ./dist/example/index.js -t [browserify-shim] --debug -o ./public/dist/index.js",
+    "browserify": "browserify ./dist/example/index.js --debug -o ./public/dist/index.js",
     "watchify": "watchify ./dist/example/index.js --verbose --debug -t [browserify-shim] -o ./public/dist/index.js",
     "test": "jest --forceExit",
     "watch": "parallelshell 'chokidar \"src/**.{ts,js,jsx}\"' 'npm run watch-ts' 'npm run watchify'",
     "clean": "rm -rf dist/*"
   },
   "dependencies": {
-    "easeljs": "^1.0.2",
+    "@createjs/easeljs": "^2.0.0-beta.4",
     "react": "^16.8.2",
     "react-dom": "^16.8.2",
     "react-reconciler": "^0.18.0"
   },
   "devDependencies": {
-    "@types/easeljs": "^1.0.0",
     "@types/node": "^9.4.7",
     "@types/react": "^16.8.2",
     "@types/react-dom": "^16.8.2",
@@ -53,10 +52,6 @@
     "serve": "^6.5.3",
     "typescript": "^3.3.3",
     "watchify": "^3.11.0"
-  },
-  "browserify-shim": {
-    "easeljs": "global:createjs",
-    "react": "global:React"
   },
   "description": "React - EaselJS bindings with React Reconciler",
   "homepage": "https://github.com/loilo-inc/easeljs-react#readme",

@@ -1,10 +1,7 @@
 import * as React from "react";
 import {render} from "react-dom";
 import {StageComponent} from "../src";
-
-const Shape = createjs.Shape;
-const Stage = createjs.Stage;
-const Rectangle = createjs.Rectangle;
+import {Rectangle, Shape, Stage} from "@createjs/easeljs";
 import {BitmapComponent, ContainerComponent, ShapeComponent, TextComponent} from "../src";
 
 class IndexComponent extends React.Component {

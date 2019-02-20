@@ -1,11 +1,9 @@
-import DisplayObject = createjs.DisplayObject;
-import Container = createjs.Container;
-import Stage = createjs.Stage;
+import * as createjs from "@createjs/easeljs"
+import {Container, DisplayObject, Stage, Text} from "@createjs/easeljs"
 import * as React from "react";
 import {CanvasHTMLAttributes} from "react";
 import * as ReactReconciler from 'react-reconciler';
 import {HostConfig} from 'react-reconciler';
-import {requestIdleCallback} from './ric';
 import {now} from "./now";
 import {getClosestInstanceFromNode} from './dom-tree';
 import {StageComponent, StageProps} from "../index";
@@ -226,7 +224,7 @@ class HostConfigImpl implements HostConfig<any, any, any, any, any, any, any, an
         updatePicture(parentInstance);
     }
 
-    commitTextUpdate(textInstance: createjs.Text, oldText: string, newText: string) {
+    commitTextUpdate(textInstance: Text, oldText: string, newText: string) {
         textInstance.text = newText;
         updatePicture(textInstance.parent);
     }
@@ -273,7 +271,7 @@ const foundDevTools = Renderer.injectIntoDevTools({
 class StageComponentImpl
     extends React.Component<StageProps & CanvasHTMLAttributes<HTMLCanvasElement>>
     implements StageComponent {
-    private _stage: createjs.Stage;
+    private _stage: Stage;
     get stage() {
         return this._stage;
     }
@@ -283,7 +281,7 @@ class StageComponentImpl
     private _mountNode;
 
     componentDidMount() {
-        this._stage = new createjs.Stage(this._canvas);
+        this._stage = new Stage(this._canvas);
         applyNodeProps(this._stage, this.props);
         this._mountNode = Renderer.createContainer(this._stage, false, false);
         Renderer.updateContainer(this.props.children, this._mountNode, this, () => {
