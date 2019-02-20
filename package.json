@@ -36,20 +36,22 @@
   },
   "dependencies": {
     "easeljs": "^1.0.2",
-    "react": "^16.2.0",
-    "react-dom": "^16.2.0",
-    "react-reconciler": "^0.7.0",
-    "serve": "^6.5.3"
+    "react": "^16.8.2",
+    "react-dom": "^16.8.2",
+    "react-reconciler": "^0.18.0"
   },
   "devDependencies": {
     "@types/easeljs": "^1.0.0",
     "@types/node": "^9.4.7",
-    "@types/react": "^16.0.40",
+    "@types/react": "^16.8.2",
+    "@types/react-dom": "^16.8.2",
+    "@types/react-reconciler": "^0.18.0",
     "browserify": "^16.1.1",
     "browserify-shim": "^3.8.14",
     "chokidar-cli": "^1.2.0",
     "parallelshell": "^3.0.2",
-    "typescript": "^2.7.2",
+    "serve": "^6.5.3",
+    "typescript": "^3.3.3",
     "watchify": "^3.11.0"
   },
   "browserify-shim": {

@@ -2,12 +2,13 @@ import DisplayObject = createjs.DisplayObject;
 import Container = createjs.Container;
 import Stage = createjs.Stage;
 import * as React from "react";
-import * as ReactFiberReconciler from 'react-reconciler';
+import {CanvasHTMLAttributes} from "react";
+import * as ReactReconciler from 'react-reconciler';
+import {HostConfig} from 'react-reconciler';
 import {requestIdleCallback} from './ric';
 import {now} from "./now";
 import {getClosestInstanceFromNode} from './dom-tree';
 import {StageComponent, StageProps} from "../index";
-import {CanvasHTMLAttributes} from "react";
 
 const kPropsToSkip = {children: true, ref: true, key: true, style: true};
 
@@ -89,8 +90,9 @@ function updatePicture(node: Stage | DisplayObject) {
 
 const UPDATE_SIGNAL = {};
 const kEmptyObject = Object.freeze({});
-const Renderer = ReactFiberReconciler({
-    appendInitialChild(parentInstance: Container, child: DisplayObject) {
+
+class HostConfigImpl implements HostConfig<any, any, any, any, any, any, any, any, any, any, any, any> {
+    appendInitialChild(parentInstance: Container, child: DisplayObject): void {
         if (typeof child === 'string') {
             // Noop for string children of Text (eg <Text>{'foo'}{'bar'}</Text>)
             throw new Error(`Don not use plain text as child of Konva.Node. You are using text: "${child}"`);
@@ -98,9 +100,15 @@ const Renderer = ReactFiberReconciler({
         parentInstance.addChild(child);
 
         updatePicture(parentInstance);
-    },
+    }
 
-    createInstance(type: string, props: { [key: string]: any }, internalInstanceHandle) {
+    cancelDeferredCallback(callbackID: any): void {
+    }
+
+    clearTimeout(handle: any): void {
+    }
+
+    createInstance(type: any, props: any, rootContainerInstance: any, hostContext: any, internalInstanceHandle: ReactReconciler.OpaqueHandle): any {
         const NodeClass = createjs[type];
         if (!NodeClass) {
             throw new Error(`createjs does not support the type "${type}"`);
@@ -111,145 +119,154 @@ const Renderer = ReactFiberReconciler({
         instance._applyProps(instance, props);
 
         return instance;
-    },
+    }
 
-    createTextInstance(text, rootContainerInstance, internalInstanceHandle) {
+    createTextInstance(text: string, rootContainerInstance: any, hostContext: any, internalInstanceHandle: ReactReconciler.OpaqueHandle): any {
         throw new Error('Text components are not supported for now in easeljs-react. Use "TextComponent" instead.');
-    },
+    }
 
-    finalizeInitialChildren(domElement, type, props) {
+    finalizeInitialChildren(parentInstance: any, type: any, props: any, rootContainerInstance: any, hostContext: any): boolean {
         return false;
-    },
+    }
 
-    getPublicInstance(instance) {
+    getChildHostContext(parentHostContext: any, type: any, rootContainerInstance: any): any {
+        return kEmptyObject;
+    }
+
+    getPublicInstance(instance: any): any {
         return Object.assign(instance, {
             getPublicInstance() {
                 return instance
             }
         });
-    },
-
-    prepareForCommit() {
-        // Noop
-    },
-
-    prepareUpdate(domElement, type, oldProps, newProps) {
-        return UPDATE_SIGNAL;
-    },
-
-    resetAfterCommit() {
-        // Noop
-    },
-
-    resetTextContent(domElement) {
-        // Noop
-    },
-
-    shouldDeprioritizeSubtree(type, props) {
-        return false;
-    },
-
-    getRootHostContext() {
-        return kEmptyObject;
-    },
-
-    getChildHostContext() {
-        return kEmptyObject;
-    },
-
-    scheduleDeferredCallback: requestIdleCallback,
-
-    shouldSetTextContent(type, props) {
-        return false;
-    },
-
-    now: now,
-
-    useSyncScheduling: true,
-
-    mutation: {
-        appendChild(parentInstance: Container, child: DisplayObject) {
-            if (child.parent === parentInstance) {
-                parentInstance.setChildIndex(child, parentInstance.numChildren - 1);
-            } else {
-                parentInstance.addChild(child);
-            }
-
-            updatePicture(parentInstance);
-        },
-
-        appendChildToContainer(parentInstance: Container, child: DisplayObject) {
-            if (child.parent === parentInstance) {
-                parentInstance.setChildIndex(child, parentInstance.numChildren - 1);
-            } else {
-                parentInstance.addChild(child);
-            }
-            updatePicture(parentInstance);
-        },
-
-        insertBefore(parentInstance: Container, child: DisplayObject, beforeChild: DisplayObject) {
-            if (child === beforeChild) {
-                throw new Error('easeljs-react: Can not insert node before itself');
-            }
-            if (child.parent) {
-                child.parent.removeChild(child);
-            }
-            const idx = parentInstance.getChildIndex(beforeChild);
-            parentInstance.addChildAt(child, idx);
-            updatePicture(parentInstance);
-        },
-
-        insertInContainerBefore(parentInstance: Container, child: DisplayObject, beforeChild: DisplayObject) {
-            if (child === beforeChild) {
-                throw new Error('easeljs-react: Can not insert node before itself');
-            }
-            if (child.parent) {
-                child.parent.removeChild(child);
-            }
-            const idx = parentInstance.getChildIndex(beforeChild);
-            parentInstance.addChildAt(child, idx);
-            updatePicture(parentInstance);
-        },
-
-        removeChild(parentInstance: Container, child: DisplayObject) {
-            child.removeAllEventListeners();
-            parentInstance.removeChild(child);
-            updatePicture(parentInstance);
-        },
-
-        removeChildFromContainer(parentInstance: Container, child: DisplayObject) {
-            child.removeAllEventListeners();
-            parentInstance.removeChild(child);
-            updatePicture(parentInstance);
-        },
-
-        commitTextUpdate(textInstance: createjs.Text, oldText: string, newText: string) {
-            textInstance.text = newText;
-            updatePicture(textInstance.parent);
-        },
-
-        commitMount(instance, type, newProps) {
-            // Noop
-        },
-
-        commitUpdate(instance,
-                     updatePayload,
-                     type,
-                     oldProps,
-                     newProps,
-                     fiberInstance) {
-            instance._applyProps(instance, newProps, oldProps);
-        }
     }
-});
+
+    getRootHostContext(rootContainerInstance: any): any {
+        return kEmptyObject;
+    }
+
+    prepareForCommit(containerInfo: any): void {
+        // noop
+    }
+
+    prepareUpdate(instance: any, type: any, oldProps: any, newProps: any, rootContainerInstance: any, hostContext: any): null | any {
+        return UPDATE_SIGNAL;
+    }
+
+    resetAfterCommit(containerInfo: any): void {
+    }
+
+    scheduleDeferredCallback(callback: () => any, options?: { timeout: number }): any {
+    }
+
+    setTimeout(handler: (...args: any[]) => void, timeout: number): any {
+        return undefined;
+    }
+
+    shouldDeprioritizeSubtree(type: any, props: any): boolean {
+        return false;
+    }
+
+    shouldSetTextContent(type: any, props: any): boolean {
+        return false;
+    }
+
+    appendChild(parentInstance: Container, child: DisplayObject) {
+        if (child.parent === parentInstance) {
+            parentInstance.setChildIndex(child, parentInstance.numChildren - 1);
+        } else {
+            parentInstance.addChild(child);
+        }
+
+        updatePicture(parentInstance);
+    }
+
+    appendChildToContainer(parentInstance: Container, child: DisplayObject) {
+        if (child.parent === parentInstance) {
+            parentInstance.setChildIndex(child, parentInstance.numChildren - 1);
+        } else {
+            parentInstance.addChild(child);
+        }
+        updatePicture(parentInstance);
+    }
+
+    insertBefore(parentInstance: Container, child: DisplayObject, beforeChild: DisplayObject) {
+        if (child === beforeChild) {
+            throw new Error('easeljs-react: Can not insert node before itself');
+        }
+        if (child.parent) {
+            child.parent.removeChild(child);
+        }
+        const idx = parentInstance.getChildIndex(beforeChild);
+        parentInstance.addChildAt(child, idx);
+        updatePicture(parentInstance);
+    }
+
+    insertInContainerBefore(parentInstance: Container, child: DisplayObject, beforeChild: DisplayObject) {
+        if (child === beforeChild) {
+            throw new Error('easeljs-react: Can not insert node before itself');
+        }
+        if (child.parent) {
+            child.parent.removeChild(child);
+        }
+        const idx = parentInstance.getChildIndex(beforeChild);
+        parentInstance.addChildAt(child, idx);
+        updatePicture(parentInstance);
+    }
+
+    removeChild(parentInstance: Container, child: DisplayObject) {
+        child.removeAllEventListeners();
+        parentInstance.removeChild(child);
+        updatePicture(parentInstance);
+    }
+
+    removeChildFromContainer(parentInstance: Container, child: DisplayObject) {
+        child.removeAllEventListeners();
+        parentInstance.removeChild(child);
+        updatePicture(parentInstance);
+    }
+
+    commitTextUpdate(textInstance: createjs.Text, oldText: string, newText: string) {
+        textInstance.text = newText;
+        updatePicture(textInstance.parent);
+    }
+
+    commitMount(instance, type, newProps) {
+        // Noop
+    }
+
+    commitUpdate(instance,
+                 updatePayload,
+                 type,
+                 oldProps,
+                 newProps,
+                 fiberInstance) {
+        instance._applyProps(instance, newProps, oldProps);
+    }
+
+    isPrimaryRenderer: boolean = false;
+    noTimeout: any = -1;
+    supportsHydration: boolean = false;
+    supportsMutation: boolean = true;
+    supportsPersistence: boolean = false;
+
+    now(): number {
+        return now()
+    }
+
+}
+
+const hostConfig = new HostConfigImpl();
+const Renderer = ReactReconciler(hostConfig);
 
 const foundDevTools = Renderer.injectIntoDevTools({
     findFiberByHostInstance: getClosestInstanceFromNode,
     bundleType: process.env.NODE_ENV !== 'production' ? 1 : 0,
-    version: React.version || 16,
+    version: React.version,
     rendererPackageName: 'easeljs-react',
     getInspectorDataForViewTag: (...args) => {
         console.log(args);
+        return {name: "noop"}
     }
 });
 
@@ -268,7 +285,7 @@ class StageComponentImpl
     componentDidMount() {
         this._stage = new createjs.Stage(this._canvas);
         applyNodeProps(this._stage, this.props);
-        this._mountNode = Renderer.createContainer(this._stage);
+        this._mountNode = Renderer.createContainer(this._stage, false, false);
         Renderer.updateContainer(this.props.children, this._mountNode, this, () => {
             if (this.props.onContainerMounted) {
                 this.props.onContainerMounted(this._stage);
@@ -286,7 +303,7 @@ class StageComponentImpl
     }
 
     componentWillUnmount() {
-        Renderer.updateContainer(null, this._mountNode, this);
+        Renderer.updateContainer(null, this._mountNode, this, null);
         this._stage.clear();
     }
 
