@@ -1,3 +1,7 @@
+# DEPRECATED
+
+This project is no longer maintained. Issues or PR may not be resolved. Use carefully. 
+
 # easeljs-react
 
 [![npm version](https://badge.fury.io/js/easeljs-react.svg)](https://badge.fury.io/js/easeljs-react)
@@ -166,9 +170,7 @@ class CanvasComponent extends React.Component {
 
 ## Contribution
 
-PR Welcome!  
-There are still no code convention or rules.
-Feel free to open issues and create pull-request.
+PR or issues may not be resolved.
 
 ### Be Typed!
 We are using TypeScript as primary development language. codes under `src` directory are active source code and `lib` are generated codes for publishing, keep it untouch.
