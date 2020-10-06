@@ -1,6 +1,6 @@
 {
   "name": "easeljs-react",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "author": "Yusuke Sakurai <kerokerokerop@gmail.com>",
   "repository": {
     "type": "git",
@@ -36,18 +36,19 @@
     "@createjs/easeljs": "^2.0.0-beta.4",
     "react": "^16.8.2",
     "react-dom": "^16.8.2",
-    "react-reconciler": "^0.18.0"
+    "react-reconciler": "^0.25.1"
   },
   "devDependencies": {
-    "@types/node": "^9.4.7",
+    "@types/createjs": "0.0.29",
+    "@types/node": "^14.11.5",
     "@types/react": "^16.8.2",
     "@types/react-dom": "^16.8.2",
     "@types/react-reconciler": "^0.18.0",
     "browserify": "^16.2.3",
-    "chokidar-cli": "^1.2.2",
+    "chokidar-cli": "^2.1.0",
     "parallelshell": "^3.0.2",
-    "serve": "^10.1.2",
-    "typescript": "^3.3.3",
+    "serve": "^11.3.2",
+    "typescript": "^4.0.3",
     "watchify": "^3.11.1"
   },
   "description": "React - EaselJS bindings with React Reconciler",
