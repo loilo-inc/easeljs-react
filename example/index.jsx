@@ -1,8 +1,8 @@
 import * as React from "react";
-import {render} from "react-dom";
-import {StageComponent} from "../src";
-import {Rectangle, Shape, Stage} from "@createjs/easeljs";
-import {BitmapComponent, ContainerComponent, ShapeComponent, TextComponent} from "../src";
+import { render } from "react-dom";
+import { StageComponent } from "../src";
+import { Rectangle, Shape, Stage } from "@createjs/easeljs";
+import { BitmapComponent, ContainerComponent, ShapeComponent, TextComponent } from "../src";
 
 class IndexComponent extends React.Component {
     stage;
@@ -21,7 +21,7 @@ class IndexComponent extends React.Component {
         const image = new Image();
         image.src = "public/img/mandrill.png";
         image.onload = () => {
-            this.setState({image});
+            this.setState({ image });
         };
         setInterval(() => {
             this.update();
@@ -63,11 +63,11 @@ class IndexComponent extends React.Component {
             x: ev.stageX, y: ev.stageY
         });
         const len = this.points.length;
-        let [prev, curr] = [this.points[len-2], this.points[len-1]];
-        let [dx,dy] = [curr.x-prev.x,curr.y-prev.y];
+        let [prev, curr] = [this.points[len - 2], this.points[len - 1]];
+        let [dx, dy] = [curr.x - prev.x, curr.y - prev.y];
         this.setState({
-            bitmapX: this.state.bitmapX+dx,
-            bitmapY: this.state.bitmapY+dy
+            bitmapX: this.state.bitmapX + dx,
+            bitmapY: this.state.bitmapY + dy
         });
     };
 
@@ -91,18 +91,18 @@ class IndexComponent extends React.Component {
                 onContainerUpdated={this.onContainerUpdated}
             >
                 <BitmapComponent image={this.state.image}
-                                 x={this.state.bitmapX}
-                                 y={this.state.bitmapY}
-                                 onMouseDown={this.onDown}
-                                 onPressMove={this.onPressMove}
-                                 onPressUp={this.onPressUp}/>
+                    x={this.state.bitmapX}
+                    y={this.state.bitmapY}
+                    onMouseDown={this.onDown}
+                    onPressMove={this.onPressMove}
+                    onPressUp={this.onPressUp} />
                 <ShapeComponent ref={this.setShapeRef}
-                                bounds={new Rectangle(0,0,100,100)}/>
+                    bounds={new Rectangle(0, 0, 100, 100)} />
                 <ContainerComponent x={100} y={200}>
                     <TextComponent
                         font={"20pt Arial"}
                         color={this.state.textColor}
-                        text={"hello world!"}/>
+                        text={"hello world!"} />
                 </ContainerComponent>
             </StageComponent>
         )
@@ -110,6 +110,6 @@ class IndexComponent extends React.Component {
 }
 
 render(
-    <IndexComponent/>,
+    <IndexComponent />,
     document.getElementById("main")
 );

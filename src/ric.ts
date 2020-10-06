@@ -8,7 +8,7 @@
 // layout, paint and other browser work is counted against the available time.
 // The frame rate is dynamically adjusted.
 
-import {kHasNativePerformanceNow} from "./now";
+import { kHasNativePerformanceNow } from "./now";
 
 const kCanUseDOM = typeof window !== 'undefined' &&
     window.document &&
@@ -137,4 +137,4 @@ if (!kCanUseDOM) {
     _rIC = global["requestIdleCallback"];
 }
 
-export {_rIC as requestIdleCallback};
+export { _rIC as requestIdleCallback };

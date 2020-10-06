@@ -16,9 +16,7 @@
     "react",
     "react-reconciler"
   ],
-  "types": [
-    "index.d.ts"
-  ],
+  "types": "index.d.ts",
   "license": "MIT",
   "scripts": {
     "start": "npm run build2 && serve .",
