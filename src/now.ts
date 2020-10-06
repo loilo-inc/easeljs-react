@@ -10,4 +10,4 @@ if (kHasNativePerformanceNow) {
         return Date.now();
     };
 }
-export {_now as now, kHasNativePerformanceNow};
+export { _now as now, kHasNativePerformanceNow };

@@ -1,14 +1,14 @@
 import * as createjs from "@createjs/easeljs"
-import {Container, DisplayObject, Stage, Text} from "@createjs/easeljs"
+import { Container, DisplayObject, Stage, Text } from "@createjs/easeljs"
 import * as React from "react";
-import {CanvasHTMLAttributes} from "react";
+import { CanvasHTMLAttributes } from "react";
 import * as ReactReconciler from 'react-reconciler';
-import {HostConfig} from 'react-reconciler';
-import {now} from "./now";
-import {getClosestInstanceFromNode} from './dom-tree';
-import {StageComponent, StageProps} from "../index";
+import { HostConfig } from 'react-reconciler';
+import { now } from "./now";
+import { getClosestInstanceFromNode } from './dom-tree';
+import { StageComponent, StageProps } from "../index";
 
-const kPropsToSkip = {children: true, ref: true, key: true, style: true};
+const kPropsToSkip = { children: true, ref: true, key: true, style: true };
 
 let warningShowed = false;
 
@@ -50,7 +50,7 @@ You are using id = "${props.id}"`;
             continue;
         }
         if (key === "bounds") {
-            const bounds = props[key] || {x: null};
+            const bounds = props[key] || { x: null };
             instance.setBounds(bounds.x, bounds.y, bounds.width, bounds.height);
             continue;
         }
@@ -80,7 +80,7 @@ You are using id = "${props.id}"`;
 
 function updatePicture(node: Stage | DisplayObject) {
     //TODO: should update be done manually?
-    const {stage} = node;
+    const { stage } = node;
     if (stage) {
         stage.update();
     }
@@ -234,11 +234,11 @@ class HostConfigImpl implements HostConfig<any, any, any, any, any, any, any, an
     }
 
     commitUpdate(instance,
-                 updatePayload,
-                 type,
-                 oldProps,
-                 newProps,
-                 fiberInstance) {
+        updatePayload,
+        type,
+        oldProps,
+        newProps,
+        fiberInstance) {
         instance._applyProps(instance, newProps, oldProps);
     }
 
@@ -264,7 +264,7 @@ const foundDevTools = Renderer.injectIntoDevTools({
     rendererPackageName: 'easeljs-react',
     getInspectorDataForViewTag: (...args) => {
         console.log(args);
-        return {name: "noop"}
+        return { name: "noop" }
     }
 });
 
@@ -282,6 +282,8 @@ class StageComponentImpl
 
     componentDidMount() {
         this._stage = new Stage(this._canvas);
+        // https://stackoverflow.com/a/17172943
+        createjs.Touch.enable(this._stage);
         applyNodeProps(this._stage, this.props);
         this._mountNode = Renderer.createContainer(this._stage, false, false);
         Renderer.updateContainer(this.props.children, this._mountNode, this, () => {
@@ -306,7 +308,7 @@ class StageComponentImpl
     }
 
     render() {
-        const {width, height} = this.props;
+        const { width, height } = this.props;
         return (
             <canvas
                 className={this.props.className}
@@ -319,5 +321,5 @@ class StageComponentImpl
     }
 }
 
-export {StageComponentImpl as StageComponent}
+export { StageComponentImpl as StageComponent }
 export * from "./types";
