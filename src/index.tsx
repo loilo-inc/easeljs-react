@@ -79,10 +79,11 @@ You are using id = "${props.id}"`;
 }
 
 function updatePicture(node: Stage | DisplayObject) {
-    //TODO: should update be done manually?
-    const { stage } = node;
-    if (stage) {
-        stage.update();
+    // TODO: should update be done manually?
+    // const { stage } = node;
+    // the object spread works on dev mode, but not after build, on "create-react-app" project
+    if (node.parent && node.parent.update) {
+        node.parent.update.update();
     }
 }
 
